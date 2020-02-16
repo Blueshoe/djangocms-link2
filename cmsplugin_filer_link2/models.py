@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.core.urlresolvers import NoReverseMatch
+from django.urls import NoReverseMatch
 from django.db import models
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
@@ -12,7 +12,6 @@ from django.conf import settings
 from cms.models import CMSPlugin
 
 from filer.fields.file import FilerFileField
-from filer.utils.compatibility import python_2_unicode_compatible
 
 from djangocms_attributes_field.fields import AttributesField
 
@@ -28,7 +27,6 @@ LINK_STYLES = getattr(settings, "FILER_LINK_STYLES", DEFULT_LINK_STYLES)
 EXCLUDED_KEYS = ['class', 'href', 'target', ]
 
 
-@python_2_unicode_compatible
 class FilerLink2Plugin(CMSPlugin):
     name = models.CharField(_('name'), max_length=255)
     url = models.CharField(_('url'), blank=True, null=True, max_length=2000,
@@ -64,6 +62,7 @@ class FilerLink2Plugin(CMSPlugin):
         to=CMSPlugin,
         related_name='%(app_label)s_%(class)s',
         parent_link=True,
+        on_delete=models.CASCADE
     )
 
     def __str__(self):
@@ -158,7 +157,6 @@ class FilerLink2Plugin(CMSPlugin):
         return configured_destinations[0]
 
 
-@python_2_unicode_compatible
 class LinkHealthState(models.Model):
     NOT_REACHABLE = '4xx'
     REDIRECT = '3xx'
@@ -175,7 +173,7 @@ class LinkHealthState(models.Model):
     )
 
     link = models.OneToOneField(FilerLink2Plugin, unique=True, related_name='linkhealth',
-                                verbose_name=_('Link name'))
+                                verbose_name=_('Link name'), on_delete=models.CASCADE)
     state = models.CharField(max_length=3, choices=LINK_STATES, verbose_name=_('State'))
     detected = models.DateTimeField(auto_now=True, verbose_name=_('Detected on'),
                                     help_text=_('Date and time when the faulty link state was detected.'))

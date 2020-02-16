@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -23,7 +24,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='linkhealthstate',
             name='link',
-            field=models.OneToOneField(related_name='linkhealth', verbose_name='Link', to='cmsplugin_filer_link2.FilerLink2Plugin'),
+            field=models.OneToOneField(related_name='linkhealth', verbose_name='Link', to='cmsplugin_filer_link2.FilerLink2Plugin', on_delete=django.db.models.deletion.CASCADE),
         ),
         migrations.AlterField(
             model_name='linkhealthstate',

@@ -1,7 +1,7 @@
 import requests
 
 from django.core.management.base import BaseCommand
-from django.core.urlresolvers import NoReverseMatch
+from django.urls import NoReverseMatch
 
 from django.utils.translation import activate
 from requests.exceptions import ConnectionError, MissingSchema, InvalidSchema, ReadTimeout

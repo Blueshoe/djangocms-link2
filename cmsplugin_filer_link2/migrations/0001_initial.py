@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('link_style', models.CharField(default=' ', max_length=255, verbose_name='link style', choices=[(' ', 'Default')])),
                 ('new_window', models.BooleanField(default=False, help_text='Do you want this link to open a new window?', verbose_name='new window?')),
                 ('link_attributes', djangocms_attributes_field.fields.AttributesField(default=dict, help_text='Optional. Adds HTML attributes to the rendered link.', blank=True)),
-                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, related_name='cmsplugin_filer_link2_filerlink2plugin', primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, related_name='cmsplugin_filer_link2_filerlink2plugin', primary_key=True, serialize=False, to='cms.CMSPlugin', on_delete=django.db.models.deletion.CASCADE)),
                 ('file', filer.fields.file.FilerFileField(on_delete=django.db.models.deletion.SET_NULL, blank=True, to='filer.File', null=True)),
                 ('page_link', cms.models.fields.PageField(on_delete=django.db.models.deletion.SET_NULL, blank=True, to='cms.Page', help_text='A link to a page has priority over urls.', null=True, verbose_name='page')),
             ],
