@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import django.db.models.deletion
 from django.db import migrations, models
 
 
@@ -17,7 +18,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('state', models.CharField(max_length=3, choices=[('3xx', 'Redirected'), ('4xx', 'Not reachable'), ('5xx', 'Server error')])),
                 ('detected', models.DateTimeField(auto_now=True)),
-                ('link', models.OneToOneField(related_name='linkhealth', to='cmsplugin_filer_link2.FilerLink2Plugin')),
+                ('link', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='linkhealth', to='cmsplugin_filer_link2.FilerLink2Plugin')),
             ],
         ),
     ]

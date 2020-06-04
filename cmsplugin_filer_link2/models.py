@@ -2,8 +2,9 @@
 from __future__ import unicode_literals
 
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.core.urlresolvers import NoReverseMatch
+from django.urls.exceptions import NoReverseMatch
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -12,7 +13,6 @@ from django.conf import settings
 from cms.models import CMSPlugin
 
 from filer.fields.file import FilerFileField
-from filer.utils.compatibility import python_2_unicode_compatible
 
 from djangocms_attributes_field.fields import AttributesField
 
@@ -62,6 +62,7 @@ class FilerLink2Plugin(CMSPlugin):
 
     cmsplugin_ptr = models.OneToOneField(
         to=CMSPlugin,
+        on_delete=models.CASCADE,
         related_name='%(app_label)s_%(class)s',
         parent_link=True,
     )
@@ -174,8 +175,13 @@ class LinkHealthState(models.Model):
         (TIMEOUT, _('Timeout')),
     )
 
-    link = models.OneToOneField(FilerLink2Plugin, unique=True, related_name='linkhealth',
-                                verbose_name=_('Link name'))
+    link = models.OneToOneField(
+        FilerLink2Plugin,
+        on_delete=models.CASCADE,
+        unique=True,
+        related_name='linkhealth',
+        verbose_name=_('Link name')
+    )
     state = models.CharField(max_length=3, choices=LINK_STATES, verbose_name=_('State'))
     detected = models.DateTimeField(auto_now=True, verbose_name=_('Detected on'),
                                     help_text=_('Date and time when the faulty link state was detected.'))
