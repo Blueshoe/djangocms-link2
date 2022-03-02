@@ -4,10 +4,9 @@ from __future__ import unicode_literals
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.urls.exceptions import NoReverseMatch
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
 from cms.models import CMSPlugin
@@ -18,6 +17,7 @@ from djangocms_attributes_field.fields import AttributesField
 
 from cmsplugin_filer_link2.fields import Select2PageField
 from cmsplugin_filer_link2.validators import validate_anchor_id
+from six import python_2_unicode_compatible
 
 DEFULT_LINK_STYLES = (
     (" ", "Default"),
