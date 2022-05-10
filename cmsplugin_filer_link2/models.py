@@ -49,7 +49,7 @@ class FilerLink2Plugin(CMSPlugin):
     link_attributes = AttributesField(excluded_keys=EXCLUDED_KEYS, blank=True,
                                       help_text=_('Optional. Adds HTML attributes to the rendered link.'))
 
-    encrypt_mailto = models.BooleanField(_('Encryption of Mailto'), default=False,
+    encrypt_mailto = models.BooleanField(_('Encryption of Mailto'), default=True,
                                          help_text=_('Encrypt the mailto, as protection against bots collecting mails '
                                                      'addresses.'))
 
