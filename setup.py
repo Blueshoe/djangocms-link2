@@ -25,7 +25,6 @@ setup(
         "django-filer >= 1.2.0",
         "django-cms >= 3.1",
         "djangocms-attributes-field",
-        "django-select2<=6.3.1",
         "requests"
     ],
     include_package_data=True,
