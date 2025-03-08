@@ -46,6 +46,7 @@ class FilerLink2Plugin(CMSPluginBase):
             'classes': ['collapse', ],
             'fields': [
                 'link_attributes',
+                'encrypt_mailto',
             ]
         })
     )
