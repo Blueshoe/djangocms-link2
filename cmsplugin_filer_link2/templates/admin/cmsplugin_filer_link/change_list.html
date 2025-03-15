@@ -1,0 +1,101 @@
+{% extends 'admin/change_list.html' %}
+{% load i18n %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <style>
+        .link2-critical-error {
+            color: red;
+        }
+        .link2-warning {
+            color: #ffbb00
+        }
+        .error-list {
+            display: inline-block;
+            margin-right: 50px;
+        }
+        a.cms-btn.btn-analysis {
+            background-color: #0bf !important;
+            color: white !important;
+            display: inline-block;
+            padding: 8px 16px !important;
+            margin-bottom: 30px;
+            margin-top: 10px;
+        }
+        a.cms-btn.btn-analysis:hover {
+            color: white !important;
+            background-color: #00aaee !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content_title %}
+    <h1>
+        {% trans 'Welcome to you link health state dashboard!' %}
+    </h1>
+{% endblock %}
+
+{% block content %}
+    {# Short error overview report. #}
+    {% if error_count %}
+        <div>
+            {% blocktrans count counter=error_count %}
+                We have identified 1 issue:
+            {% plural %}
+                We have identified {{ error_count }} issues:
+            {% endblocktrans %}
+        </div>
+        <ul class="error-list">
+            {% if redirected_links %}
+                <li class="link2-warning">
+                    {% blocktrans count counter=redirected_links|length %}
+                        1 link is
+                    {% plural %}
+                        {{ counter }} links are
+                    {% endblocktrans %}
+                    redirected (3xx).
+                </li>
+            {% endif %}
+            {% if not_found_errors %}
+                <li class="link2-critical-error">
+                    {% blocktrans count counter=not_found_errors|length %}
+                        1 link leads
+                    {% plural %}
+                        {{ counter }} links lead
+                    {% endblocktrans %}
+                    into a page which cannot be found (4xx).
+                </li>
+            {% endif %}
+            {% if server_errors %}
+                <li class="link2-critical-error">
+                    {% blocktrans count counter=server_errors|length %}
+                        1 link leads
+                    {% plural %}
+                        {{ counter }} links lead
+                    {% endblocktrans %}
+                    into a page which results in a server error (5xx).
+                </li>
+            {% endif %}
+            {% if bad_configured_links %}
+                <li class="link2-critical-error">
+                    {% blocktrans count counter=bad_configured_links|length %}
+                        1 link is
+                    {% plural %}
+                        {{ counter }} links are
+                    {% endblocktrans %}
+                    badly configured.
+                </li>
+            {% endif %}
+        </ul>
+    {% else %}
+        <div>
+            {% blocktrans %}
+                Everything seems to be fine!
+            {% endblocktrans %}
+        </div>
+    {% endif %}
+    <a class="cms-btn btn-analysis" href="{% url 'admin:cmsplugin_filer_link2_linkhealthstate_update_health_state' %}">{% trans 'Start link analysis' %}</a>
+    {{ block.super }}
+{% endblock %}
+
+{% block object_tools %}{% endblock %}
