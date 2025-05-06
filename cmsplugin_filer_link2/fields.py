@@ -14,7 +14,7 @@ from django_select2.forms import Select2Widget  # noqa
 class PageSelect2Widget(PageSelectWidget):
 
     class Media:
-        js = ('https://code.jquery.com/jquery-2.1.4.min.js', settings.SELECT2_JS, 'django_select2/django_select2.js')
+        js = ['https://code.jquery.com/jquery-2.1.4.min.js','django_select2/django_select2.js'] + settings.SELECT2_JS
         # css = {
         #     'screen': (settings.SELECT2_CSS, )
         # }
