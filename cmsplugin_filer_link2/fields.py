@@ -15,9 +15,9 @@ class PageSelect2Widget(PageSelectWidget):
 
     class Media:
         js = ('https://code.jquery.com/jquery-2.1.4.min.js', settings.SELECT2_JS, 'django_select2/django_select2.js')
-        css = {
-            'screen': (settings.SELECT2_CSS, )
-        }
+        # css = {
+        #     'screen': (settings.SELECT2_CSS, )
+        # }
 
     def _build_widgets(self):
         site_choices = get_site_choices()
