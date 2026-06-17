@@ -23,9 +23,13 @@ class PageSelect2Widget(PageSelectWidget):
         # it against the post-noConflict (undefined) global and logs a "jQuery not
         # found" error on every page; _build_script loads it on demand instead.
         js = ['django_select2/django_select2.js']
-        # css = {
-        #     'screen': (settings.SELECT2_CSS, )
-        # }
+        # select2's own JS is loaded on demand (see _build_script) to dodge the
+        # noConflict jQuery-timing issue, but its stylesheet has no such problem
+        # and is safe to ship via Media. Without it the results render as an
+        # unstyled, inline tree that overlaps the rest of the plugin form.
+        css = {
+            'screen': tuple(settings.SELECT2_CSS),
+        }
 
     def _build_widgets(self):
         site_choices = get_site_choices()
